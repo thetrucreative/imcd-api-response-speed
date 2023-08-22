@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "CPU Usage Visualization";
+}
+
+<h1>CPU Usage Visualization</h1>
+
+<div id="chartContainer" style="height: 400px; width: 100%;"></div>
+
+@section scripts {
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // This code will be executed after the page content is fully loaded
+
+            try {
+                var timestamps = @Html.Raw(Json.Serialize(ViewBag.Timestamps));
+                var cpuValues = @Html.Raw(Json.Serialize(ViewBag.CpuValues));
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    title: {
+                        text: "CPU Usage Over Time"
+                    },
+                    axisX: {
+                        title: "Timestamp",
+                        valueFormatString: "HH:mm:ss"
+                    },
+                    axisY: {
+                        title: "CPU Usage"
+                    },
+                    data: [{
+                        type: "line",
+                        xValueFormatString: "HH:mm:ss",
+                        dataPoints: timestamps.map((timestamp, index) => ({
+                            x: new Date(timestamp),
+                            y: cpuValues[index]
+                        }))
+                    }]
+                });
+
+                chart.render();
+            } catch (error) {
+                console.error("Error rendering chart:", error);
+            }
+        });
+    </script>
+}

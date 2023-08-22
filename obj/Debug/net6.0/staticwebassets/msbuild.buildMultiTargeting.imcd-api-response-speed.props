@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\imcd-api-response-speed.props" />
+</Project>
