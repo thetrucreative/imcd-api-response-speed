@@ -7,19 +7,19 @@ using System.Text.Json.Serialization;
 
 namespace imcd_api_response_speed.Services
 {
-    public class CloudHubIntegration
+    public class CloudHubIntegrationService
     {
         //store the bearerToken across requests
         private string _bearerToken;
 
         //logging
-        private readonly ILogger<CloudHubIntegration> _logger;
+        private readonly ILogger<CloudHubIntegrationService> _logger;
 
         //START: store cookies & login session
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient = new();
 
-        public CloudHubIntegration(IConfiguration configuration, ILogger<CloudHubIntegration> logger)
+        public CloudHubIntegrationService(IConfiguration configuration, ILogger<CloudHubIntegrationService> logger)
         {
             _configuration = configuration;
             var baseUrl = _configuration["CloudHubIntegration:BaseUrl"];
@@ -47,7 +47,7 @@ namespace imcd_api_response_speed.Services
             if (loginResponse.IsSuccessStatusCode)
             {
                 var loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-                var loginResponseObject = JsonConvert.DeserializeObject<LoginResponse>(loginResponseBody);
+                var loginResponseObject = JsonConvert.DeserializeObject<LoginResponseModel>(loginResponseBody);
                 _bearerToken = loginResponseObject.access_token;
                 _logger.LogInformation("Authentication successful");
                 return _bearerToken;
@@ -84,7 +84,7 @@ namespace imcd_api_response_speed.Services
         }
 
         //3. Get dashboard stats of all APIs
-        public async Task<DashboardStatsResponse> GetDashboardStats(string appId)
+        public async Task<DashboardStatsResponseModel> GetDashboardStats(string appId)
         {
             _logger.LogInformation("Calling GetDashboardStats method...");
             var bearerToken = _bearerToken;
@@ -100,7 +100,7 @@ namespace imcd_api_response_speed.Services
             dashboardStatsResponse.EnsureSuccessStatusCode();
 
             var dashboardStatsResponseBody = await dashboardStatsResponse.Content.ReadAsStringAsync();
-            var response = JsonConvert.DeserializeObject<DashboardStatsResponse>(dashboardStatsResponseBody);
+            var response = JsonConvert.DeserializeObject<DashboardStatsResponseModel>(dashboardStatsResponseBody);
 
             // Decode and assign CPU data
             foreach (var worker in response.workerStatistics)

@@ -9,10 +9,10 @@ namespace imcd_api_response_speed.Controllers
     [Route("api/[controller]")]
     public class CloudHubIntegrationController : Controller
     {
-        private readonly CloudHubIntegration _cloudHubIntegration;
-        private readonly OpenSearchIntegration _openSearchIntegration;
+        private readonly CloudHubIntegrationService _cloudHubIntegration;
+        private readonly OpenSearchIntegrationService _openSearchIntegration;
 
-        public CloudHubIntegrationController(CloudHubIntegration cloudHubIntegration, OpenSearchIntegration openSearchIntegration) 
+        public CloudHubIntegrationController(CloudHubIntegrationService cloudHubIntegration, OpenSearchIntegrationService openSearchIntegration) 
         {
             _cloudHubIntegration = cloudHubIntegration;
             _openSearchIntegration = openSearchIntegration;
@@ -31,7 +31,7 @@ namespace imcd_api_response_speed.Controllers
         public async Task<IActionResult> GetApiInfoList()
         {
             var apiInfoJson = await _cloudHubIntegration.GetApiInfoList();
-            var apiInfoList = JsonConvert.DeserializeObject<List<ApiInfoResponse>>(apiInfoJson);
+            var apiInfoList = JsonConvert.DeserializeObject<List<ApiInfoResponseModel>>(apiInfoJson);
 
             foreach (var apiInfo in apiInfoList)
             {

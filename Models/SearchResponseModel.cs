@@ -1,6 +1,6 @@
 ﻿namespace imcd_api_response_speed.Models
 {
-    public class SearchResponse
+    public class SearchResponseModel
     {
         // Define properties that match the OpenSearch search response structure
         // For example:

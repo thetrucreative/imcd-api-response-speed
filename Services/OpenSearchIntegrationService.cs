@@ -17,14 +17,14 @@ using Nest;
 
 namespace imcd_api_response_speed.Services
 {
-    public class OpenSearchIntegration
+    public class OpenSearchIntegrationService
     {
         private readonly HttpClient _httpClient = new HttpClient();
         private readonly IConfiguration _configuration;
-        private readonly ILogger<OpenSearchIntegration> _logger;
+        private readonly ILogger<OpenSearchIntegrationService> _logger;
         private readonly ElasticClient _elasticClient;
 
-        public OpenSearchIntegration(IConfiguration configuration, ILogger<OpenSearchIntegration> logger, ElasticClient elasticClient)
+        public OpenSearchIntegrationService(IConfiguration configuration, ILogger<OpenSearchIntegrationService> logger, ElasticClient elasticClient)
         {
             _configuration = configuration;
             _logger = logger;
@@ -32,11 +32,11 @@ namespace imcd_api_response_speed.Services
         }
 
         //check to handle retrieval of indexed data from OS
-        public IEnumerable<DashboardStatsDocument> GetIndexedData()
+        public IEnumerable<DashboardStatsDocumentModel> GetIndexedData()
         {
             try
             {
-                var searchResponse = _elasticClient.Search<DashboardStatsDocument>(s => s
+                var searchResponse = _elasticClient.Search<DashboardStatsDocumentModel>(s => s
                     .Index("non-prod-api-response-speed-dashboardstats") // Update with your index name
                     .Size(10000) // Adjust the size based on your needs
                     .Query(q => q.MatchAll())
@@ -59,7 +59,7 @@ namespace imcd_api_response_speed.Services
         //end of check
 
         //1. Post API info to Opensearch and index accordingly
-        public async Task<bool> IndexApiInfo(ApiInfoResponse apiInfo)
+        public async Task<bool> IndexApiInfo(ApiInfoResponseModel apiInfo)
         {
             try
             {
@@ -102,14 +102,14 @@ namespace imcd_api_response_speed.Services
         }
 
         // 2. Post Dashboard stats info alongside the appId to Opensearch and index accordingly
-        public async Task<bool> IndexDashboardStats(DashboardStatsResponse dashboardStats, string appId)
+        public async Task<bool> IndexDashboardStats(DashboardStatsResponseModel dashboardStats, string appId)
         {
             try
             {
                 _logger.LogInformation("Calling IndexDashboardStats method...");
 
                 // Create a list to store indexed data for each worker
-                var indexedDataList = new List<DashboardStatsDocument>();
+                var indexedDataList = new List<DashboardStatsDocumentModel>();
 
                 // Iterate through each worker's statistics
                 foreach (var worker in dashboardStats.workerStatistics)
@@ -129,7 +129,7 @@ namespace imcd_api_response_speed.Services
                     }
 
                     // Create a DashboardStatsDocument object for indexing
-                    var indexedData = new DashboardStatsDocument
+                    var indexedData = new DashboardStatsDocumentModel
                     {
                         AppId = appId,
                         WorkerId = worker.id,

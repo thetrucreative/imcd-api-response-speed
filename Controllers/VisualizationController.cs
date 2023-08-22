@@ -11,10 +11,10 @@ namespace imcd_api_response_speed.Controllers
     [Route("api/[controller]")]
     public class VisualizationController : Controller
     {
-        private readonly OpenSearchIntegration _openSearchIntegration;
+        private readonly OpenSearchIntegrationService _openSearchIntegration;
         private readonly ILogger<VisualizationController> _logger;
 
-        public VisualizationController(OpenSearchIntegration openSearchIntegration, ILogger<VisualizationController> logger)
+        public VisualizationController(OpenSearchIntegrationService openSearchIntegration, ILogger<VisualizationController> logger)
         {
             _openSearchIntegration = openSearchIntegration;
             _logger = logger;

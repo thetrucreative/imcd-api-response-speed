@@ -2,7 +2,7 @@
 
 namespace imcd_api_response_speed.Models
 {
-    public class DashboardStatsDocument
+    public class DashboardStatsDocumentModel
     {
         public string AppId { get; set; }
         public string WorkerId { get; set; }

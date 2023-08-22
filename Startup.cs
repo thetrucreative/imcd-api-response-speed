@@ -25,10 +25,10 @@ namespace imcd_api_response_speed
             services.AddHttpClient();
 
             // Add CloudHubIntegration as a singleton service
-            services.AddSingleton<CloudHubIntegration>();
+            services.AddSingleton<CloudHubIntegrationService>();
 
             // Add OpenSearchIntegration as a singleton service
-            services.AddSingleton<OpenSearchIntegration>();
+            services.AddSingleton<OpenSearchIntegrationService>();
 
             // Add ElasticClient as a singleton service
             services.AddSingleton<ElasticClient>(sp =>
