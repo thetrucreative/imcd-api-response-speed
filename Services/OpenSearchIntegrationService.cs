@@ -108,7 +108,10 @@ namespace imcd_api_response_speed.Services
             {
                 _logger.LogInformation("Calling IndexDashboardStats method...");
 
-                // Create a list to store indexed data for each worker
+                // Check if dashboardStats contains data
+                bool hasDashboardStatsData = dashboardStats.workerStatistics != null && dashboardStats.workerStatistics.Count > 0;
+
+                // list to store indexed data for each worker
                 var indexedDataList = new List<DashboardStatsDocumentModel>();
 
                 // Iterate through each worker's statistics
@@ -142,23 +145,33 @@ namespace imcd_api_response_speed.Services
                     indexedDataList.Add(indexedData);
                 }
 
-                if (indexedDataList.Count > 0)
+                // Index the list of DashboardStatsDocument objects if dashboardStats has data
+                if (hasDashboardStatsData)
                 {
-                    // Index the list of DashboardStatsDocument objects
-                    var indexResponse = _elasticClient.IndexMany(indexedDataList, "non-prod-api-response-speed-dashboardstats");
-
-                    if (!indexResponse.IsValid)
+                    if (indexedDataList.Count > 0)
                     {
-                        // Handle Elasticsearch indexing errors
-                        throw new Exception($"Elasticsearch indexing failed: {indexResponse.DebugInformation}");
+                        // Index the list of DashboardStatsDocument objects
+                        var indexResponse = _elasticClient.IndexMany(indexedDataList, "non-prod-api-response-speed-dashboardstats");
+
+                        if (!indexResponse.IsValid)
+                        {
+                            // Handle Elasticsearch indexing errors
+                            throw new Exception($"Elasticsearch indexing failed: {indexResponse.DebugInformation}");
+                        }
+
+                        _logger.LogInformation("Dashboard stats indexing successful.");
+                        return true;
                     }
 
-                    _logger.LogInformation("Dashboard stats indexing successful.");
-                    return true;
+                    _logger.LogInformation("No data to index for Dashboard stats.");
+                    return false;
                 }
-
-                _logger.LogInformation("No data to index for Dashboard stats.");
-                return false;
+                else
+                {
+                    _logger.LogInformation("No Dashboard stats data to index.");
+                    //return indexedDataList.Count > 0; // Return whether payload data was indexed
+                    return true; //bulk indexing needs to be successful
+                }
             }
             catch (Exception ex)
             {

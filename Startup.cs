@@ -1,4 +1,5 @@
-﻿using imcd_api_response_speed.Services;
+﻿using imcd_api_response_speed.Controllers;
+using imcd_api_response_speed.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -45,6 +46,7 @@ namespace imcd_api_response_speed
 
                 return new ElasticClient(settings);
             });
+            services.AddSingleton<AutomationController>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
