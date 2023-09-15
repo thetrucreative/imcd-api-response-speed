@@ -2,9 +2,7 @@
 {
     public class DashboardStatsResponseModel
     {
-        //public Dictionary<long, int>? events { get; set; }
         public List<WorkerStatistic>? workerStatistics { get; set; }
-
         public Dictionary<long, double>? CpuTimestamps { get; set; } 
     }
 

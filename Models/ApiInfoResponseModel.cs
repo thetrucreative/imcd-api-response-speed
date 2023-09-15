@@ -2,9 +2,7 @@
 {
     public class ApiInfoResponseModel
     {
-    //    public string? versionId { get; set; }
-        public string? domain { get; set; }
-        //    public string? fullDomain { get; set; }
+         public string? domain { get; set; }
         public string? status { get; set; }
     }
 }

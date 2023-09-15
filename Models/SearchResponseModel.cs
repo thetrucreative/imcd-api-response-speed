@@ -3,7 +3,6 @@
     public class SearchResponseModel
     {
         // Define properties that match the OpenSearch search response structure
-        // For example:
         public SearchHits Hits { get; set; }
     }
 
