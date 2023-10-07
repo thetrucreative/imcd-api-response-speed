@@ -17,9 +17,9 @@ Technologies Used:
 - CanvasJS to create dynamic and interactive visualizations of CPU usage trends.
 
 Disclaimer:
-This project is independently developed and maintained by Peter Kagera, an integration & operations analyst at IMCD. It is not officially endorsed by CloudHub or any third-party APIs referenced within the code.
+This project is not officially endorsed by CloudHub or any third-party APIs referenced within the code.
 
 Contact:
 For inquiries or support, kindly reach out to tru.creative.pk@gmail.com.
 
-© [2023] thetrucreative-IMCD. All Rights Reserved.
+© [2023] thetrucreative.
