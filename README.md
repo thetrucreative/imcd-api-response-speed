@@ -19,7 +19,4 @@ Technologies Used:
 Disclaimer:
 This project is not officially endorsed by CloudHub or any third-party APIs referenced within the code.
 
-Contact:
-For inquiries or support, kindly reach out to tru.creative.pk@gmail.com.
-
 © [2023] thetrucreative.
