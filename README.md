@@ -1,6 +1,3 @@
-Project Name: IMCD API Response Speed
-
-Description:
 The IMCD API Response Speed project is designed to enhance the performance of our API endpoints by optimizing the retrieval of API information and dashboard statistics from CloudHub (Mulesoft). This data is then meticulously processed and efficiently stored using OpenSearch, enabling swift and dependable access to pivotal application insights and dashboard statistics. Additionally, the project encompasses a visualization component that presents CPU usage trends over time for diverse applications, offering crucial insights into system performance.
 
 Key Features:
