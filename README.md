@@ -15,5 +15,3 @@ Technologies Used:
 
 Disclaimer:
 This project is not officially endorsed by CloudHub or any third-party APIs referenced within the code.
-
-© [2023] thetrucreative.
